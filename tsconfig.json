@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    /* File Layout */
+    "rootDir": "./src",      // Le dice a TS que tu código está acá
+    "outDir": "./dist",     // Donde va a parar el código compilado
+    "resolveJsonModule": true,
+    /* Environment Settings */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": false,
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "types": ["node"],      // Importante para que reconozca process.env y demás
+
+    /* Other Outputs */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Stricter Typechecking Options */
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* Recommended Options */
+    "strict": true,
+    "esModuleInterop": true, // Vital para importar librerías como Express o Cors sin drama
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true
+  , "moduleDetection": "force"},
+  "include": ["src/**/*"],    // Le dice a TS que solo compile lo que está en src
+  "exclude": ["node_modules"] // Que ignore la carpeta de librerías
+}

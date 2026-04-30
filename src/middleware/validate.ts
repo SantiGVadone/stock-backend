@@ -10,4 +10,6 @@ export const validateBody =
     }
 
     res.locals.validateBody = result.data
+
+    next()
   }

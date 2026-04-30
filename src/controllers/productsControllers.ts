@@ -18,7 +18,7 @@ export const getAllProductsController = async (
     return res.status(200).json(result)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Error al obtener los productos' })
+    return res.status(500).json({ message: 'Error al obtener los productos' })
   }
 }
 
@@ -31,7 +31,7 @@ export const createProductController = async (req: Request, res: Response) => {
     return res.status(201).json(newProduct)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Error al crear el producto' })
+    return res.status(500).json({ message: 'Error al crear el producto' })
   }
 }
 
@@ -53,7 +53,7 @@ export const updateProductController = async (req: Request, res: Response) => {
     return res.status(200).json(updatedProduct)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Error al actualizar el producto' })
+    return res.status(500).json({ message: 'Error al actualizar el producto' })
   }
 }
 
@@ -71,7 +71,7 @@ export const deleteProductController = async (req: Request, res: Response) => {
     return res.status(200).json({ message: 'Producto eliminado correctamente' })
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Error al eliminar el producto' })
+    return res.status(500).json({ message: 'Error al eliminar el producto' })
   }
 }
 
@@ -90,6 +90,6 @@ export const getProductByIdController = async (req: Request, res: Response) => {
     return res.status(200).json(result)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Error al obtener los productos' })
+    return res.status(500).json({ message: 'Error al obtener los productos' })
   }
 }

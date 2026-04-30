@@ -15,7 +15,7 @@ export const getAllProductsController = async (
   try {
     const result = await getAllProductsServices()
 
-    res.status(200).json(result)
+    return res.status(200).json(result)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Error al obtener los productos' })
@@ -28,7 +28,7 @@ export const createProductController = async (req: Request, res: Response) => {
     //tomo los datos ya validados
 
     const newProduct = await createProductServices(data)
-    res.status(201).json(newProduct)
+    return res.status(201).json(newProduct)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Error al crear el producto' })
@@ -87,7 +87,7 @@ export const getProductByIdController = async (req: Request, res: Response) => {
     if (!result) {
       return res.status(400).json({ message: 'Producto no encontrado' })
     }
-    res.status(200).json(result)
+    return res.status(200).json(result)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Error al obtener los productos' })

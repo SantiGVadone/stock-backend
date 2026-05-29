@@ -62,10 +62,10 @@
 
 # Pasos 1.1
 
-- Crear un endpoint para hacer sign-up
-  - por ahora simplemente vamos a crear un endpoint que guarde en la db los datos nuevos, verificando que no se repita el email con uno ya existente
+- ✅Crear un endpoint para hacer sign-up
+  - ✅ por ahora simplemente vamos a crear un endpoint que guarde en la db los datos nuevos, verificando que no se repita el email con uno ya existente
   - En un futuro deberia poderse poner un codigo de local, el cual seria una especie de invitacion para que ese usuario empieze a perteneces a un local
 
 - Crear un endpoint para hacer log-in
-  - por ahora simplemente se va a matchear email y password
+  - ✅ por ahora simplemente se va a matchear email y password
   - Los JWT se van a manejar de una forma precaria al principio

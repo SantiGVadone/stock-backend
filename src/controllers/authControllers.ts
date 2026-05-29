@@ -5,8 +5,8 @@ import type { loginDTO, registerDTO } from '../interfaces/auth'
 export const register = async (_req: Request, res: Response) => {
   try {
     const data: registerDTO = res.locals.validateBody
-    console.log('Data recibida en el controlador de register: ', data)
-
+    // console.log('Data recibida en el controlador de register: ', data)
+    //  la info esta llegando bien
     const result = await authService.registerServices(data)
 
     if (!result.success) {
@@ -22,8 +22,8 @@ export const register = async (_req: Request, res: Response) => {
 export const login = async (_req: Request, res: Response) => {
   try {
     const data: loginDTO = res.locals.validateBody
-    console.log('Data recibida en el controlador de login: ', data)
-
+    // console.log('Data recibida en el controlador de login: ', data)
+    //  la info esta llegando bien
     const result = await authService.loginServices(data)
 
     if (!result.success) {

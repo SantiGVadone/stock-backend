@@ -6,7 +6,7 @@ import {
   deleteProductController,
   getProductByIdController
 } from '../controllers/productsControllers'
-import { validateBody } from '../middleware/validate'
+import { validateBody } from '../middleware/validateMiddleware'
 import { productSchema, updateProductSchema } from '../schemas/productoSchema'
 
 const router = Router()

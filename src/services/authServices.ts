@@ -4,7 +4,20 @@ import * as authRepository from '../repository/authRepository'
 export const loginServices = async (data: loginDTO) => {
   try {
     const result = await authRepository.login(data)
-    return result
+    if (!result.success || !result.data) {
+      return { success: false, message: 'Error al iniciar sesion', data: null }
+    }
+
+    const stores = await authRepository.getUserStores(Number(result.data.id))
+
+    return {
+      success: true,
+      message: result.message,
+      data: {
+        ...result.data,
+        stores
+      }
+    }
   } catch (error) {
     return { success: false, message: 'Error al iniciar sesion', data: null }
   }

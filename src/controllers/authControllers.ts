@@ -1,12 +1,11 @@
 import type { Request, Response } from 'express'
 import * as authService from '../services/authServices'
 import type { loginDTO, registerDTO } from '../interfaces/auth'
+import jwt from 'jsonwebtoken'
 
 export const register = async (_req: Request, res: Response) => {
   try {
     const data: registerDTO = res.locals.validateBody
-    // console.log('Data recibida en el controlador de register: ', data)
-    //  la info esta llegando bien
     const result = await authService.registerServices(data)
 
     if (!result.success) {
@@ -21,16 +20,36 @@ export const register = async (_req: Request, res: Response) => {
 
 export const login = async (_req: Request, res: Response) => {
   try {
+    const secretKey = process.env.JWT_SECRET || 'default'
     const data: loginDTO = res.locals.validateBody
-    // console.log('Data recibida en el controlador de login: ', data)
-    //  la info esta llegando bien
+
     const result = await authService.loginServices(data)
 
-    if (!result.success) {
+    if (!result.success || !result.data) {
       return res.status(400).json({ message: result.message })
-    } else {
-      return res.status(201).json({ data: result.data })
     }
+
+    const token = jwt.sign(
+      {
+        id: result.data.id,
+        superadmin: result.data.superadmin
+      },
+      secretKey,
+      { expiresIn: '1d' }
+    )
+
+    return res.status(200).json({
+      message: result.message,
+      token,
+      user: {
+        id: result.data.id,
+        name: result.data.name,
+        lastName: result.data.lastName,
+        email: result.data.email,
+        superadmin: result.data.superadmin,
+        stores: result.data.stores // Tu front usa esto para el menú desplegable
+      }
+    })
   } catch (error) {
     return res.status(500).json({ message: 'Error interno del servidor' })
   }

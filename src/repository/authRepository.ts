@@ -74,3 +74,29 @@ export const register = async (data: registerDTO) => {
     }
   }
 }
+
+export const getUserStores = async (userId: number) => {
+  try {
+    const query = `SELECT s.id, s.name, us.rol 
+      FROM stores s
+      INNER JOIN users_stores us ON s.id = us.id_store
+      WHERE us.id_user = $1`
+
+    const result = await pool.query(query, [userId])
+    if (result.rowCount === 0) {
+      return {
+        success: false,
+        message: 'No se encontraron tiendas para este usuario',
+        data: null
+      }
+    }
+    return result.rows
+  } catch (e) {
+    console.error('Error al obtener las tiendas del usuario: ', e)
+    return {
+      success: false,
+      message: 'Error al obtener las tiendas del usuario',
+      data: null
+    }
+  }
+}

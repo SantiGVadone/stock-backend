@@ -13,7 +13,10 @@ export const login = async (data: loginDTO) => {
 
     const user = result.rows[0]
 
-    const isPasswordValid = await bcrypt.compare(data.password, user.password)
+    const isPasswordValid = await bcrypt.compare(
+      data.password,
+      user.password as string
+    )
 
     if (!isPasswordValid) {
       return { success: false, message: 'Contraseña incorrecta' }
@@ -50,17 +53,10 @@ export const register = async (data: registerDTO) => {
 
     const newUser = await pool.query(
       `
-        INSERT INTO users (name, lastname, phone, email, password, superadmin) 
-        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, lastname, phone, email, superadmin
+        INSERT INTO users (name, lastname, phone, email, password) 
+        VALUES ($1, $2, $3, $4, $5) RETURNING id, name, lastname, phone, email, superadmin;
     `,
-      [
-        data.name,
-        data.lastName,
-        data.phone,
-        data.email,
-        hashedPassword,
-        data.superadmin
-      ]
+      [data.name, data.lastName, data.phone, data.email, hashedPassword]
     )
 
     const user = newUser.rows[0]

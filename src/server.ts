@@ -10,7 +10,6 @@ app.use(express.json()) //para que maneje json
 
 app.use('/api/products', productRoutes)
 app.use('/api/auth', authRoutes)
-//test
 
 const PORT = process.env.PORT || 5000
 

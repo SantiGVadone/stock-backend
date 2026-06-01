@@ -9,5 +9,4 @@ export interface registerDTO {
   phone: string
   email: string
   password: string
-  superadmin: boolean
 }

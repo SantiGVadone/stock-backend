@@ -35,6 +35,7 @@ export const login = async (data: loginDTO) => {
       }
     }
   } catch (e) {
+    console.error('Error al iniciar sesión: ', e)
     return { success: false, message: 'Error al iniciar sesión', data: null }
   }
 }

@@ -4,7 +4,7 @@ export interface Product {
   description: string
   quantity: number
   category?: string
-  localId?: string
+  localId?: number
 }
 
 export type CreateProductDTO = Omit<Product, 'id'>

@@ -13,7 +13,8 @@ export const getAllProductsController = async (
   res: Response
 ) => {
   try {
-    const result = await getAllProductsServices()
+    const storeId = res.locals.currentStoreId as number
+    const result = await getAllProductsServices(storeId)
 
     return res.status(200).json(result)
   } catch (error) {
@@ -24,8 +25,8 @@ export const getAllProductsController = async (
 
 export const createProductController = async (req: Request, res: Response) => {
   try {
-    const data = (res.locals.validateBody ?? req.body) as CreateProductDTO
-    //tomo los datos ya validados
+    const data = res.locals.validateBody as CreateProductDTO
+    data.localId = res.locals.currentStoreId as number
 
     const newProduct = await createProductServices(data)
     return res.status(201).json(newProduct)

@@ -8,14 +8,22 @@ import {
 } from '../controllers/productsControllers'
 import { validateBody } from '../middleware/validateMiddleware'
 import { productSchema, updateProductSchema } from '../schemas/productoSchema'
+import { checkStorePermission } from '../middleware/roleMiddleware'
+import { authRequired } from '../middleware/authMiddleware'
 
 const router = Router()
 
 //get para crear el producto
-router.get('/', getAllProductsController)
+router.get('/', authRequired, checkStorePermission, getAllProductsController)
 
 //post para crear el producto
-router.post('/', validateBody(productSchema), createProductController)
+router.post(
+  '/',
+  authRequired,
+  checkStorePermission,
+  validateBody(productSchema),
+  createProductController
+)
 
 //patch para el actualizar el producto
 router.patch('/:id', validateBody(updateProductSchema), updateProductController)

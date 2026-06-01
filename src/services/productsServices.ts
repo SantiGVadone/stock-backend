@@ -1,26 +1,31 @@
 import { pool } from '../config/database'
 import type { CreateProductDTO, UpdateProductDTO } from '../interfaces/products'
+import * as productRepository from '../repository/productsRepository'
 
-export const getAllProductsServices = async () => {
+export const getAllProductsServices = async (storeId: number) => {
   try {
-    const result = await pool.query('SELECT * FROM products ORDER BY id ASC;')
-    return result.rows
+    const result = await productRepository.getAllProducts(storeId)
+
+    return {
+      success: result.success,
+      message: result.message,
+      data: result.data
+    }
   } catch (error) {
-    console.error('Error al traer productos', error)
+    console.error('Error al traer los productos', error)
     throw error
   }
 }
 
 export const createProductServices = async (data: CreateProductDTO) => {
   try {
-    const query = `INSERT INTO products (name, description, quantity, category)
-                                  VALUES ($1 , $2         , $3      ,       $4) RETURNING *;`
+    const result = await productRepository.createProduct(data)
 
-    const values = [data.name, data.description, data.quantity, data.category]
-
-    const result = await pool.query(query, values)
-
-    return result.rows[0]
+    return {
+      success: result.success,
+      message: result.message,
+      data: result.data
+    }
   } catch (error) {
     console.error('Error al crear el producto', error)
     throw error

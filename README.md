@@ -60,12 +60,39 @@
 
 - ✅ Modificar la DB para que los productos tengan ID_LOCAL, osea que cada producto pertenece si o si a un local
 
-# Pasos 1.1
+# Pasos V1.1
 
 - ✅Crear un endpoint para hacer sign-up
   - ✅ por ahora simplemente vamos a crear un endpoint que guarde en la db los datos nuevos, verificando que no se repita el email con uno ya existente
-  - En un futuro deberia poderse poner un codigo de local, el cual seria una especie de invitacion para que ese usuario empieze a perteneces a un local
 
 - Crear un endpoint para hacer log-in
-  - ✅ por ahora simplemente se va a matchear email y password
-  - Los JWT se van a manejar de una forma precaria al principio
+  - ✅ Verificar Email y Password
+  - ✅ Devolver una lista de las tiendas donde ese usuario esta registrado
+
+# Pasos V1.2
+
+- ✅ Hacer que el login devuelva un JWT de 1d(por el momento)
+- ✅ Verificar que todos los endpoints de Products reciban ese JWT
+- ✅ Se va a recibir un header "x-store-id" para saber sobre que Store se quiere trabajar (este header deve ser seleccionado mediante el frontend, desde la lista de tiendas que se enviaron al hacer el login)
+
+# Pasos V1.3
+
+- Crear una Route para las Stores:
+  - Crear Store
+  - Listar Stores
+  - Listar Store por ID
+  - Eliminar Store por ID
+  - Actulizar Store por ID
+- Todos estos endpoints deben estar validados por el token
+
+# Pasos V1.4
+
+- Reglas de negocio adicionales:
+  - Al crear una Store, automaticamente el usuario que la crea obtiene el rol Boss sobre esta.
+  - Solo se permitira interactuar con las tiendas a los usuarios que esten registrados en estas.
+  - Solo el Dueño de la tienda puede invitar a un usuario a ser parte de esta
+    - En un futuro se decidira si esta invitacion sera por medio de un link o por medio de un codigo o algo asi
+  - El empleado puede elegir abandonar una tienda ('renunciar').
+  - El dueño de la tienda puede elegir eliminar un empleado('echar').
+  - La tienda solo puede ser eliminada por el dueño o por un superadmin
+  - Si el dueño de la tienda decide abandonar la tienda, esta se eliminara, asi como todos los productos de la misma y cualquier informacion relacionada.

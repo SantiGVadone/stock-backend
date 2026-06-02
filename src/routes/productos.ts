@@ -26,11 +26,22 @@ router.post(
 )
 
 //patch para el actualizar el producto
-router.patch('/:id', validateBody(updateProductSchema), updateProductController)
+router.patch(
+  '/:id',
+  authRequired,
+  checkStorePermission,
+  validateBody(updateProductSchema),
+  updateProductController
+)
 
 //delete para Eliminar el producto
-router.delete('/:id', deleteProductController)
+router.delete(
+  '/:id',
+  authRequired,
+  checkStorePermission,
+  deleteProductController
+)
 
 //get con id para obtener un producto solo
-router.get('/:id', getProductByIdController)
+router.get('/:id', authRequired, checkStorePermission, getProductByIdController)
 export default router

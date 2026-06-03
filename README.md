@@ -80,7 +80,8 @@
 - Crear una Route para las Stores:
   - Crear Store
   - Listar Stores
-  - Listar Store por ID
+  - Listar Stores por ID de cliente opcional
+  - Listar Store por ID de Store
   - Eliminar Store por ID
   - Actulizar Store por ID
 - Todos estos endpoints deben estar validados por el token

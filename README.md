@@ -78,9 +78,10 @@
 # Pasos V1.3
 
 - Crear una Route para las Stores:
-  - Crear Store
-  - Listar Stores
-  - Listar Stores por ID de cliente opcional
+  - ✅ Crear Store
+    - ✅ Al crear la Store tengo que asignarle el rango de 'jefe' a la persona que la crea
+  - 🚫 Listar Stores (esto no lo voy a hacer ya que no quiero que cualquiera pueda listar todas las stores)
+  - ✅ Listar Stores por ID de usuario
   - Listar Store por ID de Store
   - Eliminar Store por ID
   - Actulizar Store por ID
@@ -89,7 +90,7 @@
 # Pasos V1.4
 
 - Reglas de negocio adicionales:
-  - Al crear una Store, automaticamente el usuario que la crea obtiene el rol Boss sobre esta.
+  - ✅ Al crear una Store, automaticamente el usuario que la crea obtiene el rol 'jefe' sobre esta.
   - Solo se permitira interactuar con las tiendas a los usuarios que esten registrados en estas.
   - Solo el Dueño de la tienda puede invitar a un usuario a ser parte de esta
     - En un futuro se decidira si esta invitacion sera por medio de un link o por medio de un codigo o algo asi

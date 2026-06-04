@@ -38,28 +38,73 @@ export const createStoreController = async (_req: Request, res: Response) => {
 }
 
 export const updateStoreController = async (req: Request, res: Response) => {
-  try{
+  try {
     const data = res.locals.validateBody as UpdateStoreDTO
-    const currentRole = res.locals.currentRole as string 
-    
-    // Tambien se podria hacer asi 
+    const currentRole = res.locals.currentRole as string
+
+    // Tambien se podria hacer asi
     //const currentStoreId = res.locals.currentStoreId as number
-    
+
     const id = parseInt(req.params.id as string, 10)
     if (isNaN(id)) {
       return res.status(400).json({ message: 'ID invalido' })
     }
 
+    const result = await storeServices.updateStoreServices(
+      data,
+      currentRole,
+      id
+    )
 
-    const result = await storeServices.updateStoreServices(data, currentRole, id)
- 
-    if(!result.success) {
+    if (!result.success) {
       return res.status(400).json(result.data)
     }
 
     return res.status(200).json(result.data)
-  }catch(error){
+  } catch (error) {
     console.error(error)
-    return res.status(500).json({message: 'Error al actualizar la tienda'})
+    return res.status(500).json({ message: 'Error al actualizar la tienda' })
+  }
+}
+
+export const deleteStoreController = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id as string, 10)
+    if (isNaN(id)) {
+      return res.status(400).json({ message: 'ID invalido' })
+    }
+    const currentRole = res.locals.currentRole as string
+
+    const result = await storeServices.deleteStore(id, currentRole)
+
+    if (!result.success) {
+      return res.status(400).json(result.data)
+    }
+
+    return res.status(200).json(result.message)
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({ message: 'Error al eliminar la tienda' })
+  }
+}
+
+export const getStoreByIdController = async (req: Request, res: Response) => {
+  try {
+    const userId = res.locals.user.id as number
+    const storeId = parseInt(req.params.id as string, 10)
+    if (isNaN(storeId)) {
+      return res.status(400).json({ message: 'ID invalido' })
+    }
+
+    const result = await storeServices.getStoreByIdServices(userId, storeId)
+    if (!result.success) {
+      return res.status(400).json(result.data)
+    }
+    return res.status(200).json(result.data)
+  } catch (error) {
+    console.error(error)
+    return res
+      .status(500)
+      .json({ message: 'Error al obtener la tienda por ID' })
   }
 }

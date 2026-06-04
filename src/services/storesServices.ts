@@ -74,10 +74,13 @@ export const createStoreServices = async (
   }
 }
 
-
-export const updateStoreServices = async (data: UpdateStoreDTO, currentRole: string, currentStoreId: number) => {
-  try{ 
-    if(currentRole === 'empleado'){
+export const updateStoreServices = async (
+  data: UpdateStoreDTO,
+  currentRole: string,
+  currentStoreId: number
+) => {
+  try {
+    if (currentRole === 'empleado') {
       return {
         success: false,
         message: 'Error: Solo el dueño puede modificar la tienda',
@@ -98,12 +101,70 @@ export const updateStoreServices = async (data: UpdateStoreDTO, currentRole: str
       message: result.message,
       data: result.data
     }
-
-  }catch(error){
+  } catch (error) {
     console.error(error)
     return {
       success: false,
       message: 'Error al actualizar la tienda',
+      data: null
+    }
+  }
+}
+
+export const deleteStore = async (id: number, currentRole: string) => {
+  try {
+    if (currentRole === 'empleado') {
+      return {
+        success: false,
+        message: 'Error, solo el jefe puede eliminar la tienda',
+        data: null
+      }
+    }
+
+    const result = await storesRepository.deleteStore(id)
+
+    if (!result.success) {
+      return {
+        success: false,
+        message: 'Error al eliminar la tienda',
+        data: null
+      }
+    }
+    return {
+      success: result.success,
+      message: result.message,
+      data: result.data
+    }
+  } catch (error) {
+    console.error(error)
+    return {
+      success: false,
+      message: 'Error al eliminar la tienda',
+      data: null
+    }
+  }
+}
+
+export const getStoreByIdServices = async (userId: number, storeId: number) => {
+  try {
+    const result = await storesRepository.getStoreById(userId, storeId)
+    if (!result.success) {
+      return {
+        success: false,
+        message: 'Error al obtener la tienda por ID',
+        data: null
+      }
+    }
+    return {
+      success: result.success,
+      message: result.message,
+      data: result.data
+    }
+  } catch (error) {
+    console.error(error)
+    return {
+      success: false,
+      message: 'Error al obtener la tienda por ID',
       data: null
     }
   }

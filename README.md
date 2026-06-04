@@ -82,19 +82,19 @@
     - ✅ Al crear la Store tengo que asignarle el rango de 'jefe' a la persona que la crea
   - 🚫 Listar Stores (esto no lo voy a hacer ya que no quiero que cualquiera pueda listar todas las stores)
   - ✅ Listar Stores por ID de usuario
-  - Listar Store por ID de Store
-  - Eliminar Store por ID
-  - Actulizar Store por ID
-- Todos estos endpoints deben estar validados por el token
+  - ✅ Listar Store por ID de Store
+  - ✅ Eliminar Store por ID
+  - ✅ Actulizar Store por ID
+- ✅ Todos estos endpoints deben estar validados por el token
 
 # Pasos V1.2.3
 
 - Reglas de negocio adicionales:
   - ✅ Al crear una Store, automaticamente el usuario que la crea obtiene el rol 'jefe' sobre esta.
-  - Solo se permitira interactuar con las tiendas a los usuarios que esten registrados en estas.
+  - ✅ Solo se permitira interactuar con las tiendas a los usuarios que esten registrados en estas.
   - Solo el Dueño de la tienda puede invitar a un usuario a ser parte de esta
     - En un futuro se decidira si esta invitacion sera por medio de un link o por medio de un codigo o algo asi
   - El empleado puede elegir abandonar una tienda ('renunciar').
   - El dueño de la tienda puede elegir eliminar un empleado('echar').
-  - La tienda solo puede ser eliminada por el dueño o por un superadmin
+  - ✅ La tienda solo puede ser eliminada por el dueño o por un superadmin
   - Si el dueño de la tienda decide abandonar la tienda, esta se eliminara, asi como todos los productos de la misma y cualquier informacion relacionada.

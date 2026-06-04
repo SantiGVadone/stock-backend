@@ -20,7 +20,10 @@ export const register = async (_req: Request, res: Response) => {
 
 export const login = async (_req: Request, res: Response) => {
   try {
-    const secretKey = process.env.JWT_SECRET || 'default'
+    const secretKey = process.env.JWT_SECRET
+    if (!secretKey) {
+      throw new Error('Falta configurar la variable de entorno JWT_SECRET')
+    }
     const data: loginDTO = res.locals.validateBody
 
     const result = await authService.loginServices(data)
@@ -47,7 +50,7 @@ export const login = async (_req: Request, res: Response) => {
         lastName: result.data.lastName,
         email: result.data.email,
         superadmin: result.data.superadmin,
-        stores: result.data.stores // Tu front usa esto para el menú desplegable
+        stores: result.data.stores // para el menu desplegable
       }
     })
   } catch (error) {

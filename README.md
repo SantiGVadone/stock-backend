@@ -33,8 +33,8 @@
 # Pasos 1.0
 
 - ✅ Modificar la DB para que pueda guardar USUARIO
-  - Se va a crear una tabla de usuario, donde cada usuario va a tener:
-    - Tabla usuarios
+  - ✅ Se va a crear una tabla de usuario, donde cada usuario va a tener:
+    - ✅ Tabla usuarios
       - id (PK)
       - email (Único)
       - password
@@ -42,16 +42,16 @@
       - superadmin (Booleano: true para mi, false para el resto).
 
 - ✅ Modificar la DB para que pueda guardar LOCALES (puntos de ventas o depositos)
-  - Se va a crear una tabla de Local, donde cada local va a tener:
-    - Tabla Locales
+  - ✅ Se va a crear una tabla de Local, donde cada local va a tener:
+    - ✅ Tabla Locales
       - id (PK)
       - nombre
       - ubicacion, telefono ...
       - FUTURO OPCIONAL DE CADENAS QUIZAS
 
 - ✅ Modificar la DB para que un usuario pueda ser "Dueño" de ese local y "empleado" de otro
-  - Se va a crear una tabla relacional de Usuarios y Locales( para que un usuario pueda estar en varios locales)
-    - Tabla usuarios_locales
+  - ✅ Se va a crear una tabla relacional de Usuarios y Locales( para que un usuario pueda estar en varios locales)
+    - ✅ Tabla usuarios_locales
       - id (PK)
       - id_usuario (FK -> usuarios.id)
       - id_local (FK -> locales.id)
@@ -60,7 +60,7 @@
 
 - ✅ Modificar la DB para que los productos tengan ID_LOCAL, osea que cada producto pertenece si o si a un local
 
-# Pasos V1.1
+# Pasos V1.2
 
 - ✅Crear un endpoint para hacer sign-up
   - ✅ por ahora simplemente vamos a crear un endpoint que guarde en la db los datos nuevos, verificando que no se repita el email con uno ya existente
@@ -69,13 +69,13 @@
   - ✅ Verificar Email y Password
   - ✅ Devolver una lista de las tiendas donde ese usuario esta registrado
 
-# Pasos V1.2
+# Pasos V1.2.1
 
 - ✅ Hacer que el login devuelva un JWT de 1d(por el momento)
 - ✅ Verificar que todos los endpoints de Products reciban ese JWT
 - ✅ Se va a recibir un header "x-store-id" para saber sobre que Store se quiere trabajar (este header deve ser seleccionado mediante el frontend, desde la lista de tiendas que se enviaron al hacer el login)
 
-# Pasos V1.3
+# Pasos V1.2.2
 
 - Crear una Route para las Stores:
   - ✅ Crear Store
@@ -87,7 +87,7 @@
   - Actulizar Store por ID
 - Todos estos endpoints deben estar validados por el token
 
-# Pasos V1.4
+# Pasos V1.2.3
 
 - Reglas de negocio adicionales:
   - ✅ Al crear una Store, automaticamente el usuario que la crea obtiene el rol 'jefe' sobre esta.

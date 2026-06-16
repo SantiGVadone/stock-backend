@@ -16,6 +16,7 @@ export const getAllProductsController = async (
     const storeId = res.locals.currentStoreId as number
     const result = await getAllProductsServices(storeId)
 
+    console.log('estructura del result: ', result)
     return res.status(200).json(result.data)
   } catch (error) {
     console.error(error)

@@ -33,8 +33,6 @@ export const authRequired = (
     }
     next()
   } catch (error) {
-    return res
-      .status(401)
-      .json({ message: 'Token invalido, autorizacion denegada' })
+    return res.status(401).json({ message: error })
   }
 }

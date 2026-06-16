@@ -23,7 +23,6 @@ export const authRequired = (
 
     const secretKey = process.env.JWT_SECRET
     if (!secretKey) {
-      console.error('secretKey no encontrada')
       return res.status(401).json({ message: 'secretKey no encontrada' })
     }
     const decoded = jwt.verify(token, secretKey) as UserPayload

@@ -21,7 +21,10 @@ export const authRequired = (
         .json({ message: 'Token no proporcionado, autorizacion denegada' })
     }
 
-    const secretKey = process.env.JWT_SECRET || 'default_secret_key'
+    const secretKey = process.env.JWT_SECRET
+    if (!secretKey) {
+      return res.status(401).json({ message: 'secretKey no encontrada' })
+    }
     const decoded = jwt.verify(token, secretKey) as UserPayload
 
     res.locals.user = {

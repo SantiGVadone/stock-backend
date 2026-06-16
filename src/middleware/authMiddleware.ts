@@ -28,7 +28,6 @@ export const authRequired = (
       id: decoded.id,
       superadmin: decoded.superadmin
     }
-
     next()
   } catch (error) {
     return res

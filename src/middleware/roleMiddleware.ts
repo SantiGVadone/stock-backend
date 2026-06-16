@@ -50,6 +50,7 @@ export const checkStorePermission = async (
 
     res.locals.currentStoreId = storeId
     res.locals.currentRole = userRelation.rol
+    next()
   } catch (e) {
     console.error('Error en checkStorePermission:', e)
     return res

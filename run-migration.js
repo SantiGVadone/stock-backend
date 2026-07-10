@@ -7,6 +7,9 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 dotenv.config()
 
 const { Pool } = pg
@@ -18,9 +21,9 @@ const pool = new Pool({
 async function runMigration() {
   const schemaPath = path.join(__dirname, 'database', 'schema.sql')
   const sql = fs.readFileSync(schemaPath, 'utf-8')
-  
+
   const client = await pool.connect()
-  
+
   try {
     console.log('🔄 Ejecutando migración de base de datos...')
     await client.query(sql)

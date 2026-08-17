@@ -98,3 +98,7 @@
   - El dueño de la tienda puede elegir eliminar un empleado('echar').
   - ✅ La tienda solo puede ser eliminada por el dueño o por un superadmin
   - Si el dueño de la tienda decide abandonar la tienda, esta se eliminara, asi como todos los productos de la misma y cualquier informacion relacionada.
+
+# 17/8
+
+- ✅ Modificar el return del endpoint de login para que de todos los datos del usuario

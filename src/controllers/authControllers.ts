@@ -48,6 +48,7 @@ export const login = async (_req: Request, res: Response) => {
         id: result.data.id,
         name: result.data.name,
         lastName: result.data.lastName,
+        phone: result.data.phone,
         email: result.data.email,
         superadmin: result.data.superadmin,
         stores: result.data.stores // para el menu desplegable

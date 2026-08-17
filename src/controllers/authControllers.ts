@@ -46,10 +46,10 @@ export const login = async (_req: Request, res: Response) => {
       token,
       user: {
         id: result.data.id,
-        name: result.data.name,
-        lastName: result.data.lastName,
-        phone: result.data.phone,
         email: result.data.email,
+        name: result.data.name,
+        lastName: result.data.lastName || '',
+        phone: result.data.phone || '',
         superadmin: result.data.superadmin,
         stores: result.data.stores // para el menu desplegable
       }

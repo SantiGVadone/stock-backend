@@ -40,7 +40,7 @@ export const login = async (_req: Request, res: Response) => {
       secretKey,
       { expiresIn: '1d' }
     )
-
+    console.log('La result: ', result)
     return res.status(200).json({
       message: result.message,
       token,
@@ -48,8 +48,8 @@ export const login = async (_req: Request, res: Response) => {
         id: result.data.id,
         email: result.data.email,
         name: result.data.name,
-        lastName: result.data.lastName || '',
-        phone: result.data.phone || '',
+        lastName: result.data.lastName,
+        phone: result.data.phone,
         superadmin: result.data.superadmin,
         stores: result.data.stores // para el menu desplegable
       }

@@ -102,3 +102,12 @@
 # 17/8
 
 - ✅ Modificar el return del endpoint de login para que de todos los datos del usuario
+- Actualizar la API para usar RefreshToken
+  - 🟡 Crear una tabla refresh_tokens en la DB
+    - 🟡 Crear el archivo de migrations para crear la tabla
+  - 🟡 Crear el Schema
+  - 🟡 Crear la interface
+  - 🟡 Crear el Repository
+  - 🟡 Crear el Services
+  - 🟡 Crear el controller
+  - 🟡 Añadir las expiraciones de los tokens en el .env

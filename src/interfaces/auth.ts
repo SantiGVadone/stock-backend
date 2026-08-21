@@ -10,3 +10,12 @@ export interface registerDTO {
   email: string
   password: string
 }
+
+export interface changePasswordDTO {
+  oldPass: string
+  newPass: string
+}
+
+export interface refreshDTO {
+  refreshToken: string
+}

@@ -1,5 +1,6 @@
 import { pool } from '../config/database'
 import bcrypt from 'bcrypt'
+import crypto from 'crypto'
 import type { loginDTO, registerDTO } from '../interfaces/auth'
 
 export const login = async (data: loginDTO) => {
@@ -99,5 +100,112 @@ export const getUserStores = async (userId: number) => {
       message: 'Error al obtener las tiendas del usuario',
       data: null
     }
+  }
+}
+
+export const createRefreshToken = async (
+  userId: number,
+  refreshToken: string,
+  expiresAt: Date
+) => {
+  try {
+    const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex')
+
+    const result = await pool.query(
+      `
+      INSERT INTO refresh_tokens (user_id, token_hash, expires_at)
+      VALUES ($1, $2, $3)
+      RETURNING id, user_id, expires_at, created_at
+      `,
+      [userId, tokenHash, expiresAt]
+    )
+
+    return {
+      success: true,
+      data: result.rows[0]
+    }
+  } catch (e) {
+    console.error('Error al crear refresh token: ', e)
+    return {
+      success: false,
+      message: 'Error al crear refresh token',
+      data: null
+    }
+  }
+}
+
+export const findValidRefreshToken = async (refreshToken: string) => {
+  try {
+    const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex')
+
+    const result = await pool.query(
+      `
+      SELECT rt.*, u.email, u.superadmin
+      FROM refresh_tokens rt
+      INNER JOIN users u ON rt.user_id = u.id
+      WHERE rt.token_hash = $1
+        AND rt.revoked = FALSE
+        AND rt.expires_at > NOW()
+      `,
+      [tokenHash]
+    )
+
+    if (result.rowCount === 0) {
+      return {
+        success: false,
+        message: 'Refresh token inválido o expirado',
+        data: null
+      }
+    }
+
+    return {
+      success: true,
+      data: result.rows[0]
+    }
+  } catch (e) {
+    console.error('Error al buscar refresh token: ', e)
+    return {
+      success: false,
+      message: 'Error al buscar refresh token',
+      data: null
+    }
+  }
+}
+
+export const revokeRefreshToken = async (refreshToken: string) => {
+  try {
+    const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex')
+
+    await pool.query(
+      `
+      UPDATE refresh_tokens
+      SET revoked = TRUE
+      WHERE token_hash = $1
+      `,
+      [tokenHash]
+    )
+
+    return { success: true }
+  } catch (e) {
+    console.error('Error al revocar refresh token: ', e)
+    return { success: false, message: 'Error al revocar refresh token' }
+  }
+}
+
+export const revokeAllUserRefreshTokens = async (userId: number) => {
+  try {
+    await pool.query(
+      `
+      UPDATE refresh_tokens
+      SET revoked = TRUE
+      WHERE user_id = $1 AND revoked = FALSE
+      `,
+      [userId]
+    )
+
+    return { success: true }
+  } catch (e) {
+    console.error('Error al revocar todos los refresh tokens: ', e)
+    return { success: false, message: 'Error al revocar refresh tokens' }
   }
 }

@@ -29,7 +29,6 @@ async function runMigration() {
     console.log('🔄 Ejecutando migración de base de datos...')
     await client.query(sql)
     console.log('✅ Migración completada exitosamente')
-    console.log('Tablas creadas: users, stores, users_stores, products')
   } catch (error) {
     console.error('❌ Error en migración:', error.message)
     process.exit(1)

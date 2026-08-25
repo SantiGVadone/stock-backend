@@ -20,14 +20,32 @@ const pool = new Pool({
 })
 
 async function runMigration() {
+  const migrationsDir = path.join(__dirname, 'database', 'migrations')
   const schemaPath = path.join(__dirname, 'database', 'schema.sql')
-  const sql = fs.readFileSync(schemaPath, 'utf-8')
 
   const client = await pool.connect()
 
   try {
-    console.log('🔄 Ejecutando migración de base de datos...')
-    await client.query(sql)
+    console.log('🔄 Ejecutando migraciones de base de datos...')
+
+    // Ejecutar archivos de migración en orden alfabético
+    const migrationFiles = fs
+      .readdirSync(migrationsDir)
+      .filter((f) => f.endsWith('.sql'))
+      .sort()
+
+    for (const file of migrationFiles) {
+      const filePath = path.join(migrationsDir, file)
+      const sql = fs.readFileSync(filePath, 'utf-8')
+      console.log(`  📄 Ejecutando ${file}...`)
+      await client.query(sql)
+    }
+
+    // Ejecutar schema.sql (crea tablas si no existen)
+    const schemaSql = fs.readFileSync(schemaPath, 'utf-8')
+    console.log(`  📄 Ejecutando schema.sql...`)
+    await client.query(schemaSql)
+
     console.log('✅ Migración completada exitosamente')
   } catch (error) {
     console.error('❌ Error en migración:', error.message)

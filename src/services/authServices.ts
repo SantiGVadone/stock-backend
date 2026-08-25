@@ -150,20 +150,16 @@ export const changePasswordService = async (
   data: changePasswordDTO
 ) => {
   try {
-    const userResult = await authRepository.login({
-      email: '',
-      password: data.oldPass
-    })
+    const userResult = await authRepository.findUserById(userId)
     if (!userResult.success || !userResult.data) {
-      return {
-        success: false,
-        message: 'Contraseña actual incorrecta',
-        data: null
-      }
+      return { success: false, message: 'Usuario no encontrado', data: null }
     }
 
-    if (userResult.data.id !== userId) {
-      return { success: false, message: 'No autorizado', data: null }
+    const user = userResult.data
+    const isPasswordValid = await bcrypt.compare(data.oldPass, user.password)
+
+    if (!isPasswordValid) {
+      return { success: false, message: 'Contraseña actual incorrecta', data: null }
     }
 
     const hashedPassword = await bcrypt.hash(data.newPass, SALT_ROUNDS)

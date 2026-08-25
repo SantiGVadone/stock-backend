@@ -414,3 +414,16 @@ export const updatePasswordById = async (
     return { success: false, message: 'Error al actualizar contraseña' }
   }
 }
+
+export const findUserById = async (userId: number) => {
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId])
+    if (result.rowCount === 0) {
+      return { success: false, message: 'Usuario no encontrado', data: null }
+    }
+    return { success: true, data: result.rows[0] }
+  } catch (e) {
+    console.error('Error al buscar usuario por ID: ', e)
+    return { success: false, message: 'Error al buscar usuario', data: null }
+  }
+}

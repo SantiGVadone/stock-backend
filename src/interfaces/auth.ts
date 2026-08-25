@@ -19,3 +19,21 @@ export interface changePasswordDTO {
 export interface refreshDTO {
   refreshToken: string
 }
+
+export interface verifyEmailDTO {
+  token: string
+}
+
+export interface resendVerificationDTO {
+  email: string
+}
+
+export interface forgotPasswordDTO {
+  email: string
+}
+
+export interface resetPasswordDTO {
+  token: string
+  newPassword: string
+  confirmPassword: string
+}

@@ -13,3 +13,16 @@ export const validateBody =
 
     next()
   }
+
+export const validateParams =
+  (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
+    const result = schema.safeParse(req.query)
+
+    if (!result.success) {
+      return res.status(400).json({ error: result.error.format() })
+    }
+
+    res.locals.validateBody = result.data
+
+    next()
+  }

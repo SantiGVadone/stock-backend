@@ -12,8 +12,8 @@ export interface registerDTO {
 }
 
 export interface changePasswordDTO {
-  oldPass: string
-  newPass: string
+  oldPassword: string
+  newPassword: string
 }
 
 export interface refreshDTO {

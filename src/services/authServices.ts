@@ -156,13 +156,23 @@ export const changePasswordService = async (
     }
 
     const user = userResult.data
-    const isPasswordValid = await bcrypt.compare(data.oldPass, user.password)
+    const isPasswordValid = await bcrypt.compare(
+      data.oldPassword as string,
+      user.password as string
+    )
 
     if (!isPasswordValid) {
-      return { success: false, message: 'Contraseña actual incorrecta', data: null }
+      return {
+        success: false,
+        message: 'Contraseña actual incorrecta',
+        data: null
+      }
     }
 
-    const hashedPassword = await bcrypt.hash(data.newPass, SALT_ROUNDS)
+    const hashedPassword = await bcrypt.hash(
+      data.newPassword as string,
+      SALT_ROUNDS
+    )
     await authRepository.updatePassword(userId, hashedPassword)
     await authRepository.revokeAllUserRefreshTokens(userId)
 

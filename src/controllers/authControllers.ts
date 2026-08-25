@@ -4,7 +4,11 @@ import type {
   changePasswordDTO,
   loginDTO,
   registerDTO,
-  refreshDTO
+  refreshDTO,
+  verifyEmailDTO,
+  resendVerificationDTO,
+  forgotPasswordDTO,
+  resetPasswordDTO
 } from '../interfaces/auth'
 
 export const register = async (_req: Request, res: Response) => {
@@ -51,21 +55,86 @@ export const login = async (_req: Request, res: Response) => {
   }
 }
 
-export const changePassword = async (_req: Request, res: Response) => {
+export const changePassword = async (req: Request, res: Response) => {
   try {
-    const secretKey = process.env.JWT_SECRET
-
-    if (!secretKey) {
-      throw new Error('Falta configurar la variable de entorno JWT_SECRET')
+    const userId = res.locals.user?.id as number
+    if (!userId) {
+      return res.status(401).json({ message: 'No autorizado' })
     }
 
     const data: changePasswordDTO = res.locals.validateBody
 
-    const result = await authService.changePasswordService(data)
+    const result = await authService.changePasswordService(userId, data)
 
-    if (!result.success || !result.data) {
+    if (!result.success) {
       return res.status(400).json({ message: result.message })
     }
+
+    return res.status(200).json({ message: result.message })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error interno del servidor' })
+  }
+}
+
+export const verifyEmail = async (_req: Request, res: Response) => {
+  try {
+    const data: verifyEmailDTO = res.locals.validateBody
+
+    const result = await authService.verifyEmailService(data)
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message })
+    }
+
+    return res.status(200).json({ message: result.message })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error interno del servidor' })
+  }
+}
+
+export const resendVerification = async (_req: Request, res: Response) => {
+  try {
+    const data: resendVerificationDTO = res.locals.validateBody
+
+    const result = await authService.resendVerificationService(data)
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message })
+    }
+
+    return res.status(200).json({ message: result.message })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error interno del servidor' })
+  }
+}
+
+export const forgotPassword = async (_req: Request, res: Response) => {
+  try {
+    const data: forgotPasswordDTO = res.locals.validateBody
+
+    const result = await authService.forgotPasswordService(data)
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message })
+    }
+
+    return res.status(200).json({ message: result.message })
+  } catch (error) {
+    return res.status(500).json({ message: 'Error interno del servidor' })
+  }
+}
+
+export const resetPassword = async (_req: Request, res: Response) => {
+  try {
+    const data: resetPasswordDTO = res.locals.validateBody
+
+    const result = await authService.resetPasswordService(data)
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.message })
+    }
+
+    return res.status(200).json({ message: result.message })
   } catch (error) {
     return res.status(500).json({ message: 'Error interno del servidor' })
   }
